@@ -44,57 +44,63 @@ void in(node a) {
 }
 //y 2 cau 1
 void xuLyChuoiGhep(node &head) {
+    string chuoiGhep = "";
+
     node current = head;
     while (current != NULL) {
-        // ghep 
-        string chuoiGhep = current->msv + current->ngaysinh;
-        vector<char> mangGhep(chuoiGhep.begin(), chuoiGhep.end());
-        vector<int> mangSo;
-        vector<char> mangKyTu;
-
-        for (char c : chuoiGhep) {
-            if (isdigit(c)) mangSo.push_back(c - '0');
-            else mangKyTu.push_back(c);
-        }
-
-        // hien thi thong tin
-        cout << "---------------------------------\n";
-        cout << "Thanh vien: " << current->ten << endl;
-        cout << "Chuoi ghep (MSSV + NgaySinh): " << chuoiGhep << endl;
-
-        cout << "Mang Ghep: ";
-        for (char c : mangGhep) cout << c << ' ';
-        cout << endl;
-
-        cout << "Mang So: ";
-        for (int n : mangSo) cout << n << ' ';
-        cout << endl;
-
-        cout << "Mang Ky Tu: ";
-        for (char c : mangKyTu) cout << c << ' ';
-        cout << endl;
-
+        chuoiGhep += current->msv + current->ngaysinh;
         current = current->next;
     }
+
+    // tao mang ki tu va so
+    vector<int> mangSo;
+    vector<char> mangKyTu;
+    vector<char> mangGhep(chuoiGhep.begin(), chuoiGhep.end());
+
+    for (char c : chuoiGhep) {
+        if (isdigit(c)) mangSo.push_back(c - '0');
+        else if (isalpha(c)) mangKyTu.push_back(c);
+    }
+
+    //in ket qua
+    cout << "Chuoi ghep toan bo: " << chuoiGhep << endl;
+
+    cout << "Mang Ghep: ";
+    for (char c : mangGhep) cout << c << ' ';
+    cout << endl;
+
+    cout << "Mang So: ";
+    for (int n : mangSo) cout << n << ' ';
+    cout << endl;
+
+    cout << "Mang Ky Tu: ";
+    for (char c : mangKyTu) cout << c << ' ';
+    cout << endl;
 }
+//y 3
 void sapXepMangSoGiamDan(node &head) {
+    string chuoiGhep = "";
+
     node current = head;
     while (current != NULL) {
-        string ghep = current->msv + current->ngaysinh;
-        vector<int> mangSo;
-        for (char c : ghep)
-            if (isdigit(c)) mangSo.push_back(c - '0');
-
-        sort(mangSo.begin(), mangSo.end(), greater<int>()); 
-
-        cout << "Thanh vien: " << current->ten << endl;
-        cout << "Mang so sau khi sap xep giam dan: ";
-        for (int x : mangSo) cout << x << ' ';
-        cout << endl;
-        cout << "Do phuc tap sap xep: O(n log n)\n\n";
-
+        chuoiGhep += current->msv + current->ngaysinh;
         current = current->next;
     }
+
+    vector<int> mangSo;
+    for (char c : chuoiGhep) {
+        if (isdigit(c)) mangSo.push_back(c - '0');
+    }
+
+    // sort
+    sort(mangSo.begin(), mangSo.end(), greater<int>());
+
+    // In 
+    cout << "Mang so sau khi sap xep giam dan: ";
+    for (int n : mangSo) cout << n << ' ';
+    cout << endl;
+
+    cout << "Do phuc tap sap xep: O(n log n) voi n = " << mangSo.size() << endl;
 }
 void timKiem(node &head, string key) {
     bool timThay = false;
